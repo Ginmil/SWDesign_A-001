@@ -1,39 +1,30 @@
 ```mermaid
 classDiagram
-    class 사용자 {
+    class BankUI {
+
+    }
+
+    class User {
         - id : String
-        - 암호 : String
-        - 성명 : String
-        + 사용자등록(id : String, 암호 : String, 성명 : String) boolean
-        + 사용자수정(id : String, 암호 : String, 성명 : String) boolean
-        + 사용자삭제(id : String) boolean
-        + 사용자id조회(id : String) boolean
+        - pw : String
+        - name : String
+        - phone : String
+        - address : String
+        + registerUser(id: String, pw: String, name: String, phone: String, address: String) boolean
+        + updateUser(id: String, pw: String, name: String, phone: String, address: String) boolean
+        + deleteUser(id: String) boolean
+        + searchUser(id: String) boolean
     }
 
-    class 도서 {
-        - 도서id : String
-        - 도서명 : String
-        - 출판사 : String
-        - 대여상태 : boolean
-        + 도서등록(도서id : String, 도서명 : String, 출판사 : String) boolean
-        + 도서수정(도서id : String, 도서명 : String, 출판사 : String) boolean
-        + 도서삭제(도서id : String) boolean
-        + 도서id조회(도서id : String) boolean
-        + 대여상태확인(도서id : String) boolean
+    class Account {
+        - number : String
+        - balance : long
+        + deposit(id: String, amount: double) long
+        + withdraw(id: String, amount: double) long
+        + transfer(id: String, toAccountNumber: String, amount: double) long
+        + computeBalance(userid: String) long
     }
 
-    class 대여정보 {
-        - 대여id : String
-        - id : String
-        - 도서id : String
-        - 대여일 : int
-        - 반납예정일 : int
-        - 반납일 : int
-        + 대여(id : String, 도서id : String) String
-        + 반납(id : String, 도서id : String) String
-        + 연체확인(반납예정일 : int, 반납일 : int) boolean
-    }
-
-    %% DB 구조를 반영한 실선(연관 관계)
-    대여정보 "0..*" --> "1" 사용자 : 대여주체
-    대여정보 "0..*" --> "1" 도서 : 대여대상
+    %% 관계 설정
+    BankUI ..> Account : 의존
+    Account "1..*" --> "1" User : 사용자조회
